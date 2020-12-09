@@ -17,8 +17,8 @@ class CreateDetailTransactionsTable extends Migration
             $table->unsignedBigInteger('transaction_id');
             $table->unsignedBigInteger('shoes_id');
             $table->integer('quantity');
-            $table->foreign('transaction_id')->reference('id')->on('header_transactions');
-            $table->foreign('shoes_id')->reference('id')->on('shoes');
+            $table->foreign('transaction_id')->references('id')->on('header_transactions');
+            $table->foreign('shoes_id')->references('id')->on('shoes');
         });
     }
 
