@@ -16,7 +16,7 @@ class CreateDetailTransactionsTable extends Migration
         Schema::create('detail_transactions', function (Blueprint $table) {
             $table->unsignedBigInteger('transaction_id');
             $table->unsignedBigInteger('shoes_id');
-            $table->int('quantity');
+            $table->integer('quantity');
             $table->foreign('transaction_id')->reference('id')->on('header_transactions');
             $table->foreign('shoes_id')->reference('id')->on('shoes');
         });
