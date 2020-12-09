@@ -16,7 +16,7 @@ class CreateShoesTable extends Migration
         Schema::create('shoes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->int('price');
+            $table->integer('price');
             $table->string('description');
         });
     }
