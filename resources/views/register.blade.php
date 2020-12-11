@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Login Page
+    Register Page
 @endsection
 
 @section('content')
@@ -12,18 +12,27 @@
       alert(msg);
     }
 </script>
+
     <div class="containter m-4">
         <div class="row justify-content-md-center">
             <div class="col-6">
-                <form action="{{ url('/login') }}" method="POST">
+                <form action="{{ url('/register') }}" method="POST">
                     @csrf
                     <div class="form-group">
+                        <label for="inputUsername">Username</label>
+                        <input type="email" class="form-control" name="inputUsername" id="inputUsername" aria-describedby="emailHelp" placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
                         <label for="inputEmail">Email address</label>
-                        <input type="text" class="form-control" name="inputEmail" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                        <input type="email" class="form-control" name="inputEmail" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email">
                     </div>
                     <div class="form-group">
                         <label for="inputPassword">Password</label>
                         <input type="password" class="form-control" name="inputPassword" id="inputPassword" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputConfirmPassword">Confirm Password</label>
+                        <input type="password" class="form-control" name="inputConfirmPassword" id="inputConfirmPassword" placeholder="Confirm Password">
                     </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" name="checkRememberMe" id="checkRememberMe">

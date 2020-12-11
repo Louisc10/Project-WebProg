@@ -18,12 +18,12 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([[
             'username' => 'Camellia',
             'email' => 'camellia@blooms.com',
-            'password' => 'camellia123',
+            'password' => bcrypt('camellia123'),
             'role' => 'admin',
         ],[
             'username' => 'DongBaek',
             'email' => 'dongbaek@blooms.com',
-            'password' => 'dongbaek123',
+            'password' => bcrypt('dongbaek123'),
             'role' => 'member',
         ],
         ]);

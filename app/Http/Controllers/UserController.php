@@ -2,13 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public function login()
+    public function login(Request $request)
     {
-        return redirect('/');
+        $email = $request->inputEmail;
+        $password = $request->inputPassword;
+        $remember = $request->checkRememberMe;
+        $minutes = 2*60;
+        if ($remember != null)
+        {
+            $remember = true;
+        }
+        else
+        {
+            $remember = false;
+        }
+        $users = Auth::attempt(['email' => $email, 'password' => $password], $remember);
+        if ($users) {
+            return redirect('/')->cookie('email',  $email, $minutes)->cookie('password', $password, $minutes);
+        }
+        else{
+            return redirect()->back()->with('alert', 'Invalid Account!!');
+        }
+    }
+    
+    public function register(Request $request)
+    {
+        $email = $request->inputEmail;
+        $password = $request->inputPassword;
+        $remember = $request->checkRememberMe;
+        $minutes = 2*60;
+        if ($remember != null)
+        {
+            $remember = true;
+        }
+        else
+        {
+            $remember = false;
+        }
+        $users = Auth::attempt(['email' => $email, 'password' => $password], $remember);
+        if ($users) {
+            return redirect('/')->cookie('email',  $email, $minutes)->cookie('password', $password, $minutes);
+        }
+        else{
+            return redirect()->back()->with('alert', 'Invalid Account!!');
+        }
     }
 
     /**
