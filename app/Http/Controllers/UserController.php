@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\registerRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,34 +26,26 @@ class UserController extends Controller
         }
         $users = Auth::attempt(['email' => $email, 'password' => $password], $remember);
         if ($users) {
-            return redirect('/')->cookie('email',  $email, $minutes)->cookie('password', $password, $minutes);
+            return redirect('/')->cookie('user', $users, $minutes);
         }
         else{
-            return redirect()->back()->with('alert', 'Invalid Account!!');
+            return back()->with('alert', 'Invalid Account!!');
         }
     }
-    
-    public function register(Request $request)
+
+    public function register(registerRequest $request)
     {
+        $username = $request->inputUsername;
         $email = $request->inputEmail;
         $password = $request->inputPassword;
-        $remember = $request->checkRememberMe;
-        $minutes = 2*60;
-        if ($remember != null)
-        {
-            $remember = true;
-        }
-        else
-        {
-            $remember = false;
-        }
-        $users = Auth::attempt(['email' => $email, 'password' => $password], $remember);
-        if ($users) {
-            return redirect('/')->cookie('email',  $email, $minutes)->cookie('password', $password, $minutes);
-        }
-        else{
-            return redirect()->back()->with('alert', 'Invalid Account!!');
-        }
+
+        DB::table('users')->insert([
+            'username' => $username,
+            'email' => $email,
+            'password' => bcrypt($password),
+            'role' => 'member',
+        ]);
+        return redirect('/login')->with('alert', 'Register Success');
     }
 
     /**
