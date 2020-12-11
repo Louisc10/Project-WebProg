@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\loginRequest;
 use App\Http\Requests\registerRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public function login(Request $request)
+    public function login(loginRequest $request)
     {
         $email = $request->inputEmail;
         $password = $request->inputPassword;
@@ -24,13 +25,9 @@ class UserController extends Controller
         {
             $remember = false;
         }
+        
         $users = Auth::attempt(['email' => $email, 'password' => $password], $remember);
-        if ($users) {
-            return redirect('/')->cookie('user', $users, $minutes);
-        }
-        else{
-            return back()->with('alert', 'Invalid Account!!');
-        }
+        return redirect('/')->cookie('user', $users, $minutes);
     }
 
     public function register(registerRequest $request)
