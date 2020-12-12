@@ -27,7 +27,18 @@ class UserController extends Controller
         }
         
         $users = Auth::attempt(['email' => $email, 'password' => $password], $remember);
-        return redirect('/')->cookie('user', $users, $minutes);
+        if($users)
+        {
+            if($remember)
+                return redirect('/')->cookie('user', $users, $minutes);
+            else
+                return redirect('/');
+        }
+        else
+        {
+            $errors = 'invalid email or password';
+            return back()->with('alert', 'invalid email or password');
+        }
     }
 
     public function register(registerRequest $request)
@@ -43,6 +54,12 @@ class UserController extends Controller
             'role' => 'member',
         ]);
         return redirect('/login')->with('alert', 'Register Success');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return back();
     }
 
     /**

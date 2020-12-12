@@ -5,6 +5,13 @@
 @endsection
 
 @section('content')
+<script>
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+    if(exist){
+      alert(msg);
+    }
+</script>
     <div class="containter m-4">
         <div class="row justify-content-md-center">
             <div class="col-6">
